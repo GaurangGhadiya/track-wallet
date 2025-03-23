@@ -25,12 +25,15 @@ const HomeScreen = ({navigation}) => {
     <>
 
       <LinearGradient
-        colors={['#260055', '#4300A8']} // Gradient Colors
-        start={{ x: 0, y: 0 }}
+colors={["#7F3DFF", "#7F3DFF"]}      
+  start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={styles.container}
       >
-
+<View style={{flexDirection : "row", justifyContent : "space-between", alignItems : "center", marginTop : 10}}>
+<Text style={{color : "#fff", fontSize : 16}}>March 2025</Text>
+<Icon name={"logout"} color={Colors.white} size={22} onPress={logoutClick}/>
+</View>
 
         <View style={styles.topPart}>
           <Text style={styles.topBalance}>Available Balance</Text>
@@ -54,7 +57,6 @@ const HomeScreen = ({navigation}) => {
               <Text style={styles.amount}>₹0.00</Text>
             </View>
           </View>
-      <Button title={"logout"} onPress={logoutClick} />
 
           <View style={[styles.flex, { flex: 1, marginLeft: 15 }]}>
             <View style={[styles.box, { backgroundColor: "#45DB00" }]}>
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
 
   },
   tabContainer: {
-    backgroundColor: "#E2DAFF",
+    backgroundColor: "#EEE5FF",
     borderRadius: 16,
     padding: 10,
     flexDirection: "row",
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     fontWeight: 500,
-    color: "#6613EE"
+    color: "#7F3DFF"
   },
   activeBtn: {
     borderRadius: 10,

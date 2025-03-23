@@ -33,8 +33,8 @@ function MyTabs() {
 
         return <Icon name={iconName} size={size} color={color} />;
       },
-      tabBarActiveTintColor: "#6512F1",
-      tabBarInactiveTintColor: "#E2DAFF",
+      tabBarActiveTintColor: "#7F3DFF",
+      tabBarInactiveTintColor: "#EEE5FF",
       headerShown: false,
       tabBarStyle: { height: 60 }
     })}>
