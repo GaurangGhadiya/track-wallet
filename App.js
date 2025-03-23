@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as SplashScreen from "expo-splash-screen";
 
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -12,6 +13,9 @@ import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import { Colors } from './utils/Colors';
 import CategoriesScreen from './screens/CategoriesScreen';
+import { useEffect, useState } from 'react';
+import OnboardingScreen from './screens/OnboardingScreen';
+import LoginScreen from './screens/LoginScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -53,11 +57,29 @@ function MyTabs() {
 
 
 export default function App() {
+
+  useEffect(() => {
+    const loadApp = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync(); // Keep splash screen visible
+        // Simulate loading (e.g., fetch data, auth check)
+        setTimeout(() => {
+          SplashScreen.hideAsync(); // Hide splash after loading
+        }, 2000);
+      } catch (e) {
+        console.warn(e);
+      }
+    };
+    loadApp();
+  }, []);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator>
+        <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Categories" component={ProfileScreen} />
           <Stack.Screen name="Add" component={ProfileScreen} />
           <Stack.Screen name="Analytics" component={ProfileScreen} />
