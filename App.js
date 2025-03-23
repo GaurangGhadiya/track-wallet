@@ -1,21 +1,21 @@
 import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Provider, useSelector, useDispatch } from 'react-redux';
+import { store } from './redux/store';
+import { checkLoginStatus } from './redux/authSlice';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as SplashScreen from "expo-splash-screen";
-
 import { NavigationContainer } from '@react-navigation/native';
 
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import { Colors } from './utils/Colors';
 import CategoriesScreen from './screens/CategoriesScreen';
-import { useEffect, useState } from 'react';
 import OnboardingScreen from './screens/OnboardingScreen';
 import LoginScreen from './screens/LoginScreen';
+import { useEffect } from 'react';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,29 +23,20 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
-      tabBarIcon: ({focused, color, size }) => {
+      tabBarIcon: ({ color, size }) => {
         let iconName;
 
-        if (route.name === 'Home') {
-          iconName = 'home';
-        } else if (route.name === 'Categories') {
-          iconName = 'chart-donut';
-        } else if (route.name === 'Add') {
-          iconName = 'plus';
-        } else if (route.name === 'Analytics') {
-          iconName = 'chart-box-outline';
-        } else if (route.name === 'Transactions') {
-          iconName = 'clipboard-list-outline';
-        }
+        if (route.name === 'Home') iconName = 'home';
+        else if (route.name === 'Categories') iconName = 'chart-donut';
+        else if (route.name === 'Analytics') iconName = 'chart-box-outline';
+        else if (route.name === 'Transactions') iconName = 'clipboard-list-outline';
 
         return <Icon name={iconName} size={size} color={color} />;
-
       },
-      tabBarActiveTintColor: "#6512F1", 
+      tabBarActiveTintColor: "#6512F1",
       tabBarInactiveTintColor: "#E2DAFF",
-      headerShown : false,
-      
-      tabBarStyle : {height : 60}
+      headerShown: false,
+      tabBarStyle: { height: 60 }
     })}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Categories" component={CategoriesScreen} />
@@ -55,41 +46,49 @@ function MyTabs() {
   );
 }
 
-
-export default function App() {
+// ✅ Move Redux hooks inside a separate component
+function MainNavigator() {
+  const dispatch = useDispatch();
+  const { isLoggedIn, isLoading } = useSelector(state => state.auth);
 
   useEffect(() => {
-    const loadApp = async () => {
-      try {
-        await SplashScreen.preventAutoHideAsync(); // Keep splash screen visible
-        // Simulate loading (e.g., fetch data, auth check)
-        setTimeout(() => {
-          SplashScreen.hideAsync(); // Hide splash after loading
-        }, 2000);
-      } catch (e) {
-        console.warn(e);
-      }
-    };
-    loadApp();
+    dispatch(checkLoginStatus()); // Check login status on app load
   }, []);
 
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#7F3DFF" />
+      </View>
+    );
+  }
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Stack.Navigator>
-        <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ headerShown: false }}/>
+    <Stack.Navigator>
+      {isLoggedIn ? (
+        <>
           <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Categories" component={ProfileScreen} />
-          <Stack.Screen name="Add" component={ProfileScreen} />
-          <Stack.Screen name="Analytics" component={ProfileScreen} />
-          <Stack.Screen name="Transactions" component={ProfileScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </GestureHandlerRootView>
+        </>
+      )}
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
+export default function App() {
+  return (
+    <Provider store={store}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <MainNavigator />
+        </NavigationContainer>
+      </GestureHandlerRootView>
+    </Provider>
+  );
+}
 
-});
+const styles = StyleSheet.create({});

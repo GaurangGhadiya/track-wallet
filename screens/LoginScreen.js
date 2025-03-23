@@ -15,8 +15,13 @@ import Input from '../components/reusable/Input'
 import Button from '../components/reusable/Button'
 import { LinearGradient } from 'expo-linear-gradient'
 import OTPInput from '../components/reusable/OTPInput'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useDispatch } from 'react-redux'
+import { login } from '../redux/authSlice'
 
 const LoginScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+
   const [mobileNumber, setMobileNumber] = useState('')
   const [otp, setOtp] = useState(Array(6).fill(""))
   const [otpSend, setOtpSend] = useState(false)
@@ -30,12 +35,12 @@ const LoginScreen = ({navigation}) => {
     }
   }
 
-  const verifyOTP = () => {
+  const verifyOTP = async() => {
     if (otp?.join("").length != 6) {
       Alert.alert("Invalid OTP", "Please enter valid OTP")
     } else {
       Alert.alert(`Login Successfull`)
-      navigation.navigate("Home")
+      dispatch(login()); // Dispatch Redux login action
     }
   }
 

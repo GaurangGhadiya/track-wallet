@@ -4,13 +4,23 @@ import Layout from '../components/ui/Layout'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../utils/Colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Button from '../components/reusable/Button';
+import { useDispatch } from 'react-redux';
+import { logout } from '../redux/authSlice';
 
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+
   const [activeTab, setActiveTab] = useState("1")
   const [showBalance, setShowBalance] = useState(false)
 
- 
+
+  const logoutClick = async () => {
+    dispatch(logout()); // 
+   
+   };
   return (
     <>
 
@@ -44,6 +54,8 @@ const HomeScreen = () => {
               <Text style={styles.amount}>₹0.00</Text>
             </View>
           </View>
+      <Button title={"logout"} onPress={logoutClick} />
+
           <View style={[styles.flex, { flex: 1, marginLeft: 15 }]}>
             <View style={[styles.box, { backgroundColor: "#45DB00" }]}>
               <Icon name={"trending-up"} color={"#048D00"} size={20} />
