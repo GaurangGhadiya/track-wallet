@@ -1,21 +1,24 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-const CategoriesScreen = ({navigation}) => {
+const EditCategoriesScreen = ({navigation}) => {
 
 
   return (
     <View style={styles.main}>
       <View style={styles.container}>
-        <Text style={{ fontSize: 22 }}>Categories</Text>
-        <Icon name={"pencil"} color={"#222222"} size={26} onPress={() => navigation.navigate("EditCategories")}/>
+        <View style={{alignItems: "center", flexDirection : "row"}}>
+        <Icon name={"backburger"} color={"#222222"} size={26} onPress={() => navigation.goBack()}/>
+
+        <Text style={{ fontSize: 22, marginLeft : 16 }}>Edit categories</Text>
+        </View>
+        <Icon name={"plus"} color={"#222222"} size={26} onPress={() => navigation.navigate("NewCategory")}/>
       </View>
-      
     </View>
   )
 }
 
-export default CategoriesScreen
+export default EditCategoriesScreen
 
 const styles = StyleSheet.create({
   main: {

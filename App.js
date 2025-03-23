@@ -16,6 +16,8 @@ import CategoriesScreen from './screens/CategoriesScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
 import LoginScreen from './screens/LoginScreen';
 import { useEffect } from 'react';
+import EditCategoriesScreen from './screens/EditCategories';
+import NewCategoryScreen from './screens/NewCategoryScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -68,6 +70,8 @@ function MainNavigator() {
       {isLoggedIn ? (
         <>
           <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="EditCategories" component={EditCategoriesScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="NewCategory" component={NewCategoryScreen} options={{ headerShown: false }} />
         </>
       ) : (
         <>

@@ -47,7 +47,7 @@ colors={["#7F3DFF", "#7F3DFF"]}
           {!showBalance ? <Text style={styles.price}>******</Text> : <Text style={styles.price}>₹0.00</Text>}
         </View>
 
-        <View style={[styles.flex, { marginTop: 30 }]}>
+        <View style={[styles.flex, { marginTop: 27 }]}>
           <View style={[styles.flex, { flex: 1, marginLeft: 10, borderRightColor: "lightgrey", borderRightWidth: 2 }]}>
             <View style={[styles.box, { backgroundColor: "#FF480F" }]}>
               <Icon name={"trending-down"} color={"#A40900"} size={20} />
@@ -75,7 +75,7 @@ colors={["#7F3DFF", "#7F3DFF"]}
             <Text style={activeTab == "1" ? styles.btnTextActive : styles.btnText}>All</Text>
           </TouchableOpacity>
           <TouchableOpacity style={activeTab == "2" ? [styles.outerbtn, styles.activeBtn] : styles.outerbtn} onPress={() => setActiveTab("2")}>
-            <Text style={activeTab == "2" ? styles.btnTextActive : styles.btnText}>Expance</Text>
+            <Text style={activeTab == "2" ? styles.btnTextActive : styles.btnText}>Expence</Text>
           </TouchableOpacity>
           <TouchableOpacity style={activeTab == "3" ? [styles.outerbtn, styles.activeBtn] : styles.outerbtn} onPress={() => setActiveTab("3")}>
             <Text style={activeTab == "3" ? styles.btnTextActive : styles.btnText}>Income</Text>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "15%"
+    marginTop: "11%"
   },
   topBalance: {
     fontSize: 20,
