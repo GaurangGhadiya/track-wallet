@@ -18,6 +18,7 @@ import LoginScreen from './screens/LoginScreen';
 import { useEffect } from 'react';
 import EditCategoriesScreen from './screens/EditCategories';
 import NewCategoryScreen from './screens/NewCategoryScreen';
+import NewSubCategoryScreen from './screens/NewSubCategoryScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

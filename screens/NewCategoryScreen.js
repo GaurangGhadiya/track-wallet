@@ -3,11 +3,17 @@ import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Input from '../components/reusable/Input';
 import { data, showData } from './EditCategories';
-const NewCategoryScreen = ({navigation}) => {
+import NewSubCategoryScreen from './NewSubCategoryScreen';
+import { StatusBar } from 'expo-status-bar';
+const NewCategoryScreen = ({navigation}) => { 
+     const [modalVisible, setModalVisible] = useState(false);
+
 
 const [selectedTab, setSelectedTab] = useState("1")
   return (
     <View style={styles.main}>
+                      <StatusBar backgroundColor="#fff" barStyle="light-content" />
+        
       <View style={styles.container}>
         <View style={{alignItems: "center", flexDirection : "row"}}>
         <Icon name={"close"} color={"#222222"} size={26} onPress={() => navigation.goBack()}/>
@@ -41,7 +47,7 @@ const [selectedTab, setSelectedTab] = useState("1")
       </View>
       <View style={[styles.container, {marginTop : 0}]}>
             <Text style={{fontSize : 14,  color : "#333"}}>Subcategories</Text>
-            <TouchableOpacity >
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
             <Icon name={"playlist-plus"} color={"#222"} size={22} />
             </TouchableOpacity>
 
@@ -56,6 +62,7 @@ const [selectedTab, setSelectedTab] = useState("1")
       
               />
           </View>
+          <NewSubCategoryScreen modalVisible={modalVisible} setModalVisible={setModalVisible}/>
     </View>
   )
 }
