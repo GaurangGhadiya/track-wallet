@@ -12,7 +12,7 @@ const NewCategoryScreen = ({navigation}) => {
 const [selectedTab, setSelectedTab] = useState("1")
   return (
     <View style={styles.main}>
-                      <StatusBar backgroundColor="#fff" barStyle="light-content" />
+                      {/* <StatusBar backgroundColor="#fff" barStyle="light-content" /> */}
         
       <View style={styles.container}>
         <View style={{alignItems: "center", flexDirection : "row"}}>
