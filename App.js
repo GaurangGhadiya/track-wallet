@@ -20,6 +20,7 @@ import EditCategoriesScreen from './screens/EditCategories';
 import NewCategoryScreen from './screens/NewCategoryScreen';
 import Toast from "react-native-toast-message";
 import { toastConfig } from './utils/toaster';
+import UpdateProfileScreen from './screens/UpdateProfileScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -72,6 +73,8 @@ function MainNavigator() {
       {isLoggedIn ? (
         <>
           <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="UpdateProfile" component={UpdateProfileScreen} options={{ headerShown: false }} />
           <Stack.Screen name="EditCategories" component={EditCategoriesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="NewCategory" component={NewCategoryScreen} options={{ headerShown: false }} />
         </>
