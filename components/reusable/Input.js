@@ -1,7 +1,7 @@
 import React from "react";
 import { TextInput, View, Text, StyleSheet } from "react-native";
 
-const Input = ({ label, placeholder, value, onChangeText, secureTextEntry=false, keyboardType, maxLength=50}) => {
+const Input = ({ label, placeholder, value, onChangeText, secureTextEntry=false, keyboardType, maxLength=50,autoCapitalize="words"}) => {
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
@@ -14,6 +14,7 @@ const Input = ({ label, placeholder, value, onChangeText, secureTextEntry=false,
         keyboardType={keyboardType}
         placeholderTextColor="#aaa"
         maxLength={maxLength}
+        autoCapitalize={autoCapitalize}
         cursorColor={"#7F3DFF"}
       />
     </View>
