@@ -6,12 +6,13 @@ import { Colors } from '../utils/Colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../components/reusable/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/authSlice';
 
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { userData } = useSelector(state => state.auth);
 
   const [activeTab, setActiveTab] = useState("1")
   const [showBalance, setShowBalance] = useState(false)
@@ -19,21 +20,22 @@ const HomeScreen = ({navigation}) => {
 
   const logoutClick = async () => {
     dispatch(logout()); // 
-   
-   };
+
+  };
   return (
     <>
 
       <LinearGradient
-colors={["#7F3DFF", "#7F3DFF"]}      
-  start={{ x: 0, y: 0 }}
+        colors={["#7F3DFF", "#7F3DFF"]}
+        start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={styles.container}
       >
-<View style={{flexDirection : "row", justifyContent : "space-between", alignItems : "center", marginTop : 10}}>
-<Text style={{color : "#fff", fontSize : 16}}>March 2025</Text>
-<Icon name={"logout"} color={Colors.white} size={22} onPress={logoutClick}/>
-</View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 10 }}>
+          <Text style={{ color: "#fff", fontSize: 16 }}>March 2025</Text>
+          <Text style={{ color: "#fff", fontSize: 16 }}>{userData?.mobile}</Text>
+          <Icon name={"logout"} color={Colors.white} size={22} onPress={logoutClick} />
+        </View>
 
         <View style={styles.topPart}>
           <Text style={styles.topBalance}>Available Balance</Text>

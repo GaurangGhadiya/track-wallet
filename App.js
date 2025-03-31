@@ -18,7 +18,8 @@ import LoginScreen from './screens/LoginScreen';
 import { useEffect } from 'react';
 import EditCategoriesScreen from './screens/EditCategories';
 import NewCategoryScreen from './screens/NewCategoryScreen';
-import NewSubCategoryScreen from './screens/NewSubCategoryScreen';
+import Toast from "react-native-toast-message";
+import { toastConfig } from './utils/toaster';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -92,6 +93,7 @@ export default function App() {
           <MainNavigator />
         </NavigationContainer>
       </GestureHandlerRootView>
+      <Toast config={toastConfig} />
     </Provider>
   );
 }

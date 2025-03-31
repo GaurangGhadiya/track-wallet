@@ -17,7 +17,10 @@ import { LinearGradient } from 'expo-linear-gradient'
 import OTPInput from '../components/reusable/OTPInput'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch } from 'react-redux'
-import { login } from '../redux/authSlice'
+import { login, sendOTPRedux, verifyOTPRedux } from '../redux/authSlice'
+import { apiService } from '../utils/api'
+import Toast from 'react-native-toast-message'
+import { toaster } from '../utils/toaster'
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -26,22 +29,23 @@ const LoginScreen = ({navigation}) => {
   const [otp, setOtp] = useState(Array(6).fill(""))
   const [otpSend, setOtpSend] = useState(false)
 
-  const sendOTP = () => {
-    if (mobileNumber.length != 10) {
-      Alert.alert("Invalid Number", "Please enter valid mobile number")
-    } else {
-      Alert.alert(`OTP sent to your mobile number`)
-      setOtpSend(true)
-    }
-  }
+  const sendOTP = async () => {
+    const extra = () => setOtpSend(true); // ✅ Define the extra function
+
+    dispatch(sendOTPRedux({mobile : mobileNumber, extra})); // ✅ Pass extra inside an object
+};
+
 
   const verifyOTP = async() => {
-    if (otp?.join("").length != 6) {
-      Alert.alert("Invalid OTP", "Please enter valid OTP")
-    } else {
-      Alert.alert(`Login Successfull`)
-      dispatch(login()); // Dispatch Redux login action
-    }
+   dispatch(verifyOTPRedux({mobile :mobileNumber,otp: otp.join("")}))
+
+    // if (otp?.join("").length != 6) {
+    //   Alert.alert("Invalid OTP", "Please enter valid OTP")
+    // } else {
+
+    //   Alert.alert(`Login Successfull`)
+    //   dispatch(login()); // Dispatch Redux login action
+    // }
   }
 
   return (
