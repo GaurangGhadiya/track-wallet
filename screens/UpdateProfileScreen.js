@@ -1,5 +1,5 @@
 import { Image, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../utils/Colors';
@@ -8,24 +8,37 @@ import Button from '../components/reusable/Button';
 import Input from '../components/reusable/Input';
 import DatePicker from '../components/reusable/DatePicker';
 import Dropdown from '../components/reusable/Dropdown';
-import moment from 'moment';
 import { formatDateSend, formatDateShow } from '../utils/formatDate';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
+import { UpdateProfileRedux } from '../redux/authSlice';
 
 const UpdateProfileScreen = () => {
     const navigation = useNavigation();
+    const dispatch = useDispatch()
+    const { userData } = useSelector(state => state.auth);
     const [profileData, setProfileData] = useState({});
+    console.log("userData",profileData?.mobile)
+
+    useEffect(() => {
+        setProfileData(userData)
+    }, [userData])
+    
 
     const handleChange = (value, name) => {
         if (name == "date") {
-            setProfileData({ ...profileData, [name]: formatDateSend(value) });
+            setProfileData({ ...profileData, dob: formatDateSend(value) });
         } else {
             setProfileData({ ...profileData, [name]: value });
         }
     }
 
     const updateProfile = () => {
-        console.log('profileData', profileData);
+        const {name, email,dob,mobile,gender,id} = profileData
+        let body = {
+            name, email,dob,mobile,gender,id
+        }
+        dispatch(UpdateProfileRedux({body,navigation}))
     }
 
     const options = [
@@ -90,7 +103,7 @@ const UpdateProfileScreen = () => {
                         <Input
                             label={"Mobile"}
                             placeholder="Mobile Number"
-                            value={profileData?.mobile || ""}
+                            value={profileData?.mobile+"" || ""}
                             onChangeText={(value) => handleChange(value, "mobile")}
                             keyboardType="phone-pad"
                             maxLength={10}
@@ -98,7 +111,7 @@ const UpdateProfileScreen = () => {
 
                         <DatePicker
                             label={"Birth Date"}
-                            value={profileData?.date ? formatDateShow(profileData?.date) : null}
+                            value={profileData?.dob ? formatDateShow(profileData?.dob) : null}
                             onConfirm={handleChange}
                         />
                         <Dropdown

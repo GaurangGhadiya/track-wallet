@@ -4,9 +4,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../utils/Colors';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+  const { userData } = useSelector(state => state.auth);
+  console.log("userData",userData)
 
   return (
     <>
@@ -39,24 +42,24 @@ const ProfileScreen = () => {
           source={require('../assets/images/user.jpg')} 
           style={styles.profileImage}
         />
-        <Text style={styles.profileName}>Gaurang Ghadiya</Text>
+        <Text style={styles.profileName}>{userData?.name || "-"}</Text>
       </View>
       <View style={styles.userInfo}>
         <View style={styles.outerinfo}>
           <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, width : "30%"}]}>Email</Text>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>gaurangghadiya99@gmail.com</Text>
+          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>{userData?.email || "-"}</Text>
         </View>
         <View style={styles.outerinfo}>
           <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, width : "30%"}]}>Mobile No.</Text>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>9016193206</Text>
+          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>{userData?.mobile || "-"}</Text>
         </View>
         <View style={styles.outerinfo}>
           <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, width : "30%"}]}>Gender</Text>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>Male</Text>
+          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>{userData?.gender || "-"}</Text>
         </View>
         <View style={styles.outerinfo}>
           <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, width : "30%"}]}>Birth Date</Text>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>21-07-2000</Text>
+          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>{userData?.dob || "-"}</Text>
         </View>
       </View>
     </>

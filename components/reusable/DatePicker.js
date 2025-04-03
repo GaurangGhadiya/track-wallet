@@ -20,6 +20,7 @@ const DatePicker = ({ onConfirm, value, label }) => {
                     onConfirm(date, "date");
                     setIsVisible(false);
                 }}
+                maximumDate={new Date()} 
                 onCancel={() => setIsVisible(false)}
               
             />

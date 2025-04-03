@@ -6,7 +6,8 @@ import { apiService } from '../utils/api';
 // 🔄 Fetch login state from AsyncStorage
 export const checkLoginStatus = createAsyncThunk('auth/checkLoginStatus', async () => {
     const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
-    return isLoggedIn === 'true';
+    const userData = await AsyncStorage.getItem('userData');
+    return {status :isLoggedIn === 'true',userData:JSON.parse(userData)};
 });
 
 export const sendOTPRedux = createAsyncThunk('send-otp', async ({ mobile, extra }) => {
@@ -24,10 +25,21 @@ export const verifyOTPRedux = createAsyncThunk('verify-otp', async ({ mobile, ot
     try {
         const { data } = await apiService.post('/verify-otp', { mobile, otp });
         toaster("success", data?.message);
-        dispatch(login());
+        dispatch(login(data?.data));
         return data?.data;
     } catch (error) {
         toaster("error", error.response?.data?.message || "OTP verification failed");
+    }
+});
+export const UpdateProfileRedux = createAsyncThunk('update-profile', async ({body,navigation} , { dispatch }) => {
+    try {
+        const { data } = await apiService.post('/update-profile', body);
+        toaster("success", data?.message);
+        navigation.goBack()
+        if(data?.data?.mobile) return data?.data;
+    } catch (error) {
+        console.log("eee,",error)
+        toaster("error", error.response?.data?.message || "Profile updation failed");
     }
 });
 
@@ -51,12 +63,19 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(checkLoginStatus.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload;
+            state.isLoggedIn = action.payload.status;
+            state.userData = action.payload.userData || state.userData;
             state.isLoading = false;
         });
         builder.addCase(verifyOTPRedux.fulfilled, (state, action) => {
+            state.userData = action.payload || state.userData;
+            AsyncStorage.setItem('userData', JSON.stringify(action.payload)); 
+            state.isLoading = false;
+        });
+        builder.addCase(UpdateProfileRedux.fulfilled, (state, action) => {
             console.log("action",action)
-            state.userData = action.payload;
+            state.userData = action.payload || state.userData;
+            AsyncStorage.setItem('userData', JSON.stringify(action.payload)); 
             state.isLoading = false;
         });
     }
