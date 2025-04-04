@@ -44,7 +44,6 @@ const toastConfig = {
 
 
  const toaster = (type ,message1, message2) => {
-    console.log(type ,message1, message2)
     return Toast.show({
         type: type,
         text1: message1,

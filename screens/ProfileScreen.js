@@ -1,15 +1,16 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Colors } from '../utils/Colors';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { Image, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { LinearGradient } from "expo-linear-gradient";
+import { Colors } from "../utils/Colors";
+import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { IMAGE_URL } from "../utils/api";
+import { formatDateShow } from "../utils/formatDate";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-  const { userData } = useSelector(state => state.auth);
-  console.log("userData",userData)
+  const { userData } = useSelector((state) => state.auth);
 
   return (
     <>
@@ -21,45 +22,116 @@ const ProfileScreen = () => {
         style={styles.container}
       >
         <View style={styles.headerIcons}>
-          <Icon 
-            name="backburger" 
-            color={Colors.white} 
-            size={24} 
-            onPress={() => navigation.goBack()} 
+          <Icon
+            name="backburger"
+            color={Colors.white}
+            size={24}
+            onPress={() => navigation.goBack()}
           />
-          <Icon 
-            name="account-edit" 
-            color={Colors.white} 
-            size={24} 
-            onPress={() => navigation.navigate("UpdateProfile")} 
+          <Icon
+            name="account-edit"
+            color={Colors.white}
+            size={24}
+            onPress={() => navigation.navigate("UpdateProfile")}
           />
         </View>
       </LinearGradient>
 
       {/* 🟣 Profile Section */}
       <View style={styles.profileContainer}>
-        <Image 
-          source={require('../assets/images/user.jpg')} 
-          style={styles.profileImage}
-        />
+        {userData?.profileImage != null ? (
+          <Image
+            source={{ uri: IMAGE_URL + userData?.profileImage }}
+            style={styles.profileImage}
+            onError={(e) =>
+              console.log("Error loading image:", e.nativeEvent.error)
+            }
+          />
+        ) : (
+          <Image
+            source={require("../assets/images/default.png")}
+            style={styles.profileImage}
+          />
+        )}
         <Text style={styles.profileName}>{userData?.name || "-"}</Text>
       </View>
       <View style={styles.userInfo}>
         <View style={styles.outerinfo}>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, width : "30%"}]}>Email</Text>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>{userData?.email || "-"}</Text>
+          <Text
+            style={[
+              styles.profileName,
+              { fontSize: 16, marginTop: 0, width: "30%" },
+            ]}
+          >
+            Email
+          </Text>
+          <Text
+            style={[
+              styles.profileName,
+              { fontSize: 16, marginTop: 0, fontWeight: 500 },
+            ]}
+          >
+            {userData?.email || "-"}
+          </Text>
         </View>
         <View style={styles.outerinfo}>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, width : "30%"}]}>Mobile No.</Text>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>{userData?.mobile || "-"}</Text>
+          <Text
+            style={[
+              styles.profileName,
+              { fontSize: 16, marginTop: 0, width: "30%" },
+            ]}
+          >
+            Mobile No.
+          </Text>
+          <Text
+            style={[
+              styles.profileName,
+              { fontSize: 16, marginTop: 0, fontWeight: 500 },
+            ]}
+          >
+            {userData?.mobile || "-"}
+          </Text>
         </View>
         <View style={styles.outerinfo}>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, width : "30%"}]}>Gender</Text>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>{userData?.gender || "-"}</Text>
+          <Text
+            style={[
+              styles.profileName,
+              { fontSize: 16, marginTop: 0, width: "30%" },
+            ]}
+          >
+            Gender
+          </Text>
+          <Text
+            style={[
+              styles.profileName,
+              {
+                fontSize: 16,
+                marginTop: 0,
+                fontWeight: 500,
+                textTransform: "capitalize",
+              },
+            ]}
+          >
+            {userData?.gender || "-"}
+          </Text>
         </View>
         <View style={styles.outerinfo}>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, width : "30%"}]}>Birth Date</Text>
-          <Text style={[styles.profileName, {fontSize : 16, marginTop : 0, fontWeight : 500}]}>{userData?.dob || "-"}</Text>
+          <Text
+            style={[
+              styles.profileName,
+              { fontSize: 16, marginTop: 0, width: "30%" },
+            ]}
+          >
+            Birth Date
+          </Text>
+          <Text
+            style={[
+              styles.profileName,
+              { fontSize: 16, marginTop: 0, fontWeight: 500 },
+            ]}
+          >
+            {userData?.dob ? formatDateShow(userData?.dob) : "-"}
+          </Text>
         </View>
       </View>
     </>
@@ -74,17 +146,17 @@ const styles = StyleSheet.create({
     paddingTop: 26,
     height: "23%",
     borderBottomRightRadius: 30,
-    borderBottomLeftRadius: 30
+    borderBottomLeftRadius: 30,
   },
   headerIcons: {
-    flexDirection: "row", 
-    justifyContent: "space-between", 
-    alignItems: "center", 
-    marginTop: 10
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10,
   },
   profileContainer: {
     // flex: 1,
-    justifyContent: "center", 
+    justifyContent: "center",
     alignItems: "center",
     marginTop: -90,
   },
@@ -98,21 +170,21 @@ const styles = StyleSheet.create({
   profileName: {
     fontSize: 20,
     fontWeight: "bold",
-    marginTop: 10
+    marginTop: 10,
   },
-  userInfo :{
-    backgroundColor : '#ddd',
-    borderRadius : 8,
-    paddingHorizontal : 16,
-    paddingVertical:8,
-    marginHorizontal : 16,
-    marginTop : 16,
-    elevation : 3
+  userInfo: {
+    backgroundColor: "#ddd",
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginHorizontal: 16,
+    marginTop: 16,
+    elevation: 3,
   },
-  outerinfo : {
-    flexDirection : "row",
-    alignItems : "center",
-    justifyContent : "space-between",
-    paddingVertical :8
-   }
+  outerinfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 8,
+  },
 });
