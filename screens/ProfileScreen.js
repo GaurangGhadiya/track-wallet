@@ -4,14 +4,22 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors } from "../utils/Colors";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IMAGE_URL } from "../utils/api";
 import { formatDateShow } from "../utils/formatDate";
+import Button from "../components/reusable/Button";
+import { logout } from "../redux/authSlice";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
   const { userData } = useSelector((state) => state.auth);
 
+
+  const logoutClick = async () => {
+    dispatch(logout()); // 
+
+  };
   return (
     <>
       {/* 🟣 Gradient Header */}
@@ -27,12 +35,6 @@ const ProfileScreen = () => {
             color={Colors.white}
             size={24}
             onPress={() => navigation.goBack()}
-          />
-          <Icon
-            name="account-edit"
-            color={Colors.white}
-            size={24}
-            onPress={() => navigation.navigate("UpdateProfile")}
           />
         </View>
       </LinearGradient>
@@ -132,6 +134,12 @@ const ProfileScreen = () => {
           >
             {userData?.dob ? formatDateShow(userData?.dob) : "-"}
           </Text>
+        </View>
+      </View>
+      <View style={{ marginTop: 30, paddingHorizontal: 16 }}>
+      <Button title={"Update Profile"} variant={"dark"}  onPress={() => navigation.navigate("UpdateProfile")} />
+        <View style={{ marginTop: 15 }}>
+        <Button title={"Logout"} variant={"light"} onPress={logoutClick} />
         </View>
       </View>
     </>

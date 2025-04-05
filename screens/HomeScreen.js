@@ -12,16 +12,11 @@ import { logout } from '../redux/authSlice';
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { userData } = useSelector(state => state.auth);
-
   const [activeTab, setActiveTab] = useState("1")
   const [showBalance, setShowBalance] = useState(false)
 
 
-  const logoutClick = async () => {
-    dispatch(logout()); // 
-
-  };
+  
   return (
     <>
 
@@ -33,9 +28,7 @@ const HomeScreen = ({ navigation }) => {
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 10 }}>
           <Text style={{ color: "#fff", fontSize: 16 }}>March 2025</Text>
-          <Text style={{ color: "#fff", fontSize: 16 }}>{userData?.mobile}</Text>
-          <Icon name={"account"} color={Colors.white} size={22} onPress={() => navigation.navigate("Profile")} />
-          <Icon name={"logout"} color={Colors.white} size={22} onPress={logoutClick} />
+          <Icon name={"cog"} color={Colors.white} size={22} onPress={() => navigation.navigate("Setting")} />
         </View>
 
         <View style={styles.topPart}>
