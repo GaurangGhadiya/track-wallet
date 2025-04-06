@@ -1,5 +1,5 @@
-import { Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import { Alert, BackHandler, Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
 import Layout from '../components/ui/Layout'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../utils/Colors';
@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../components/reusable/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../redux/authSlice';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -16,6 +16,35 @@ const HomeScreen = ({ navigation }) => {
   const [showBalance, setShowBalance] = useState(false)
 
 
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert(
+          'Exit App',
+          'Are you sure you want to exit the app?',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            {
+              text: 'YES',
+              onPress: () => BackHandler.exitApp(),
+            },
+          ],
+          { cancelable: false }
+        );
+        return true; // Prevent default behavior (i.e., exiting the app)
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
+    }, [])
+  );
   
   return (
     <>

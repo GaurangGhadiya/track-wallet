@@ -90,10 +90,11 @@ const UpdateProfileScreen = () => {
     const formData = new FormData();
     if(name)  formData.append("name", name);
     if(email)  formData.append("email", email);
-    if(dob)  formData.append("dob", dob);
+    if(dob)  formData.append("dob", formatDateSend(dob));
     if(mobile)  formData.append("mobile", mobile);
+    if(gender) formData.append("gender", gender)
     if(id)  formData.append("id", id);
-    if(selectedImage)  formData.append("profileImage", {
+    if(selectedImage?.uri)  formData.append("profileImage", {
       uri: selectedImage?.uri,
       name: selectedImage?.fileName, // You can use any name with appropriate extension
       type: selectedImage?.mimeType, // Adjust the type based on the selected image

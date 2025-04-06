@@ -26,6 +26,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import DrawerData from './components/ui/Drawer';
 import FollowUsScreen from './screens/FollowUsScreen';
 import AboutUsScreen from './screens/AboutUsScreen';
+import MoreSettingScreen from './screens/MoreSettingScreen';
+import NotificationScreen from './screens/NotificationScreen';
+import ExportDataScreen from './screens/ExportDataScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -96,10 +99,13 @@ function MainNavigator() {
           <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
           <Stack.Screen name="UpdateProfile" component={UpdateProfileScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Setting" component={SettingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="MoreSetting" component={MoreSettingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="EditCategories" component={EditCategoriesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="NewCategory" component={NewCategoryScreen} options={{ headerShown: false }} />
           <Stack.Screen name="FollowUs" component={FollowUsScreen} options={{ headerShown: false }} />
           <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Notification" component={NotificationScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ExportData" component={ExportDataScreen} options={{ headerShown: false }} />
         </>
       ) : (
         <>

@@ -15,61 +15,75 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Colors } from "../utils/Colors";
 import { useSelector } from "react-redux";
 import { IMAGE_URL } from "../utils/api";
-import ThemeModal from "../components/Modals/ThemeModal";
-import CurrencyModal from "../components/Modals/CurrencyModal";
+import LangugeModal from "../components/Modals/LangugeModal";
+import StartScreenModal from "../components/Modals/StartScreenModal";
+import DefaultTransactionModal from "../components/Modals/DefaultTransactionModal";
+import TransactionViewModeModal from "../components/Modals/TransactionViewModeModal";
+import CurrencyFormatModal from "../components/Modals/CurrencyFormatModal";
 
 
 
-const SettingScreen = ({ navigation }) => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [currencyModalVisible, setCurrencyModalVisible] = useState(false);
+const MoreSettingScreen = ({ navigation }) => {
+  const [isEnabled, setIsEnabled] = useState(true);
+  const [langugeModalVisible, setLangugeModalVisible] = useState(false)
+  const [startScreenModal, setStartScreenModal] = useState(false)
+  const [defaultTransactionModal, setDefaultTransactionModal] = useState(false)
+  const [transactionViewMode, setTransactionViewMode] = useState(false)
+  const [currencyFormat, setCurrencyFormat] = useState(false)
 
-  const settingsOptions = [
+  const settingsOptions1 = [
     {
       id: "1",
-      title: "App lock",
-      icon: "lock",
-      onPress: () => toggleSwitch(),
+      title: "Language",
+      subTitle: "English",
+      icon: "google-translate",
+      onPress: () => setLangugeModalVisible(true),
     },
     {
       id: "2",
-      title: "Main currency",
-      subTitle: "₹ - Indian Rupee",
-      icon: "circle-multiple",
-      onPress: () => setCurrencyModalVisible(true),
+      title: "Start Screen",
+      subTitle: "Home",
+      icon: "cellphone-screenshot",
+      onPress: () => setStartScreenModal(true),
     },
     {
       id: "3",
-      title: "Theme",
-      subTitle: "Light",
-      icon: "brightness-4",
-      onPress: () => setModalVisible(true),
+      title: "Default transaction type",
+      subTitle: "Expense",
+      icon: "typewriter",
+    onPress: () => setDefaultTransactionModal(true),
     },
+  ];
+  const settingsOptions2 = [
     {
       id: "4",
-      title: "Notifications",
-      icon: "bell",
-      onPress: () => navigation.navigate("Notification"),
+      title: "Currency format",
+      subTitle: "₹1000.00",
+      icon: "bank",
+      onPress: () => setCurrencyFormat(true),
     },
     {
       id: "5",
-      title: "Export data",
-      icon: "file-export",
-      onPress: () => navigation.navigate("ExportData"),
+      title: "Transaction view mode",
+      subTitle: "List",
+      // icon: "format-list-checks",
+      icon: "file-table-outline",
+      onPress: () => setTransactionViewMode(true),
     },
     {
       id: "6",
-      title: "More settings",
-      icon: "dots-horizontal",
-      onPress: () => navigation.navigate("MoreSetting"),
+      title: "Transaction time",
+      subTitle: "Show transaction time",
+      icon: "table-clock",
+      onPress: () => toggleSwitch(),
     },
   ];
+
 
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   const renderItem = ({ item }) =>
-    item.title !== "App lock" ? (
+    item.title !== "Transaction time" ? (
       <TouchableOpacity style={styles.itemContainer} onPress={item.onPress}>
         <Icon name={item.icon} size={24} style={styles.icon} />
         <View>
@@ -81,7 +95,7 @@ const SettingScreen = ({ navigation }) => {
         </View>
       </TouchableOpacity>
     ) : (
-      <View style={{ marginBottom: -15 }}>
+      <View>
         <TouchableOpacity
           style={[styles.itemContainer, { justifyContent: "space-between" }]}
           onPress={item.onPress}
@@ -122,29 +136,66 @@ const SettingScreen = ({ navigation }) => {
             size={24}
             onPress={() => navigation.goBack()}
           />
-          <Text style={{ color: Colors.white, fontSize: 20 }}>Settings</Text>
+          <Text style={{ color: Colors.white, fontSize: 20 }}>
+            More Settings
+          </Text>
         </View>
       </LinearGradient>
 
-      <View  style={{flex: 1, backgroundColor: Colors.white}}>
-        <FlatList
-          data={settingsOptions}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.containerq}
-        />
+      <View style={{ flex: 1, backgroundColor: Colors.white }}>
+        <View>
+          <Text
+            style={{
+              fontSize: 14,
+              color: "lightgreay",
+              paddingLeft: 16,
+              marginTop: 15,
+              marginBottom: -5,
+            }}
+          >
+            General
+          </Text>
+          <FlatList
+            data={settingsOptions1}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={styles.containerq}
+          />
+          <View style={{ height: 1, backgroundColor: "#eee", width: "100%" }} />
+          <Text
+            style={{
+              fontSize: 14,
+              color: "lightgreay",
+              paddingLeft: 16,
+              marginTop: 20,
+              marginBottom: -5,
+            }}
+          >
+            Display
+          </Text>
+          <FlatList
+            data={settingsOptions2}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={styles.containerq}
+          />
+        </View>
         <Image
           source={require("../assets/images/settingbg.png")}
           style={styles.backgroundImage}
         ></Image>
       </View>
-      <ThemeModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
-      <CurrencyModal modalVisible={currencyModalVisible} setModalVisible={setCurrencyModalVisible}/>
+      <LangugeModal modalVisible={langugeModalVisible} setModalVisible={setLangugeModalVisible}/>
+      <StartScreenModal modalVisible={startScreenModal} setModalVisible={setStartScreenModal}/>
+      <DefaultTransactionModal modalVisible={defaultTransactionModal} setModalVisible={setDefaultTransactionModal}/>
+      <TransactionViewModeModal modalVisible={transactionViewMode} setModalVisible={setTransactionViewMode}/>
+      <CurrencyFormatModal modalVisible={currencyFormat} setModalVisible={setCurrencyFormat}/>
+
     </>
   );
 };
 
-export default SettingScreen;
+export default MoreSettingScreen;
 
 const styles = StyleSheet.create({
   backgroundImage: {

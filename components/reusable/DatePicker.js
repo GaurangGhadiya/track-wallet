@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Pressable } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const DatePicker = ({ onConfirm, value, label }) => {
+const DatePicker = ({ onConfirm, value, label, name = "dob" }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     return (
@@ -17,7 +17,7 @@ const DatePicker = ({ onConfirm, value, label }) => {
                 isVisible={isVisible}
                 mode="date"
                 onConfirm={(date) => {
-                    onConfirm(date, "date");
+                    onConfirm(date, name);
                     setIsVisible(false);
                 }}
                 maximumDate={new Date()} 

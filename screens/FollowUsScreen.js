@@ -1,4 +1,4 @@
-import { Linking, StyleSheet, Text, View } from 'react-native'
+import { Image, Linking, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Colors } from '../utils/Colors'
@@ -27,7 +27,7 @@ const FollowUsScreen = ({navigation}) => {
             </View>
           </LinearGradient>
 
-        <View style={{padding : 16, paddingTop : 10, flexDirection : "row", justifyContent : "space-between", alignItems : "center"}}>
+        <View style={{flex :1,padding : 16, paddingTop : 10, flexDirection : "row", justifyContent : "space-between", alignItems : "flex-start"}}>
         <SocialCard
         logo={instagramLogo}
         name="Instagram"
@@ -40,6 +40,10 @@ const FollowUsScreen = ({navigation}) => {
         onPress={() => Linking.openURL("https://www.linkedin.com/in/gaurang007")}
         description="Work with us"
       />
+       <Image
+                source={require("../assets/images/socialBg.png")}
+                style={styles.backgroundImage}
+              ></Image>
         </View>
     </>
   )
@@ -48,6 +52,14 @@ const FollowUsScreen = ({navigation}) => {
 export default FollowUsScreen
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    width: 400,
+    height: 300,
+    opacity: 0.5,
+  },
   container: {
     padding: 16,
     paddingTop: 26,

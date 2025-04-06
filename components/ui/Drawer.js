@@ -2,15 +2,11 @@ import React from "react";
 import { View, StyleSheet, Text, Image, Button, Linking, Pressable, Share } from "react-native";
 
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors } from "../../utils/Colors";
 import { DrawerActions } from '@react-navigation/native';
-
-
-// import IconM from 'react-native-vector-icons/MaterialIcons';
+import { useSelector } from "react-redux";
 
 const DrawerList = [
   { icon: "home-outline", label: "Home", navigateTo: "Home" },
@@ -72,6 +68,8 @@ const handleShare = async () => {
 };
 
 function DrawerData(props) {
+    const { userData } = useSelector((state) => state.auth);
+  
   return (
     <>
       <LinearGradient
@@ -93,7 +91,7 @@ function DrawerData(props) {
                 justifyContent: "center",
               }}
             >
-              <Text style={styles.title}>EMI Calculator</Text>
+              <Text style={styles.title}>{userData?.name || userData?.mobile}</Text>
             </View>
           </Pressable>
         </View>
