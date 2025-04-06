@@ -27,8 +27,8 @@ const HomeScreen = ({ navigation }) => {
         style={styles.container}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: 10 }}>
+          <Icon name={"menu"} color={Colors.white} size={24} onPress={() =>  navigation.openDrawer()} />
           <Text style={{ color: "#fff", fontSize: 16 }}>March 2025</Text>
-          <Icon name={"cog"} color={Colors.white} size={22} onPress={() => navigation.navigate("Setting")} />
         </View>
 
         <View style={styles.topPart}>

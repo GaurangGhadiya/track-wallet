@@ -22,9 +22,28 @@ import Toast from "react-native-toast-message";
 import { toastConfig } from './utils/toaster';
 import UpdateProfileScreen from './screens/UpdateProfileScreen';
 import SettingScreen from './screens/SettingScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import DrawerData from './components/ui/Drawer';
+import FollowUsScreen from './screens/FollowUsScreen';
+import AboutUsScreen from './screens/AboutUsScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
+function MyDrawer() {
+  return (
+    <Drawer.Navigator initialRouteName="MainTabs"   screenOptions={{
+      drawerStyle: {
+        width: 270, // Set the desired width here
+      },
+    }}     drawerContent={props => <DrawerData {...props} />}
+>
+      <Drawer.Screen name="MainTabs" component={MyTabs} options={{ headerShown: false }} />
+
+    </Drawer.Navigator>
+  );
+}
 
 function MyTabs() {
   return (
@@ -73,12 +92,14 @@ function MainNavigator() {
     <Stack.Navigator>
       {isLoggedIn ? (
         <>
-          <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="Home" component={MyDrawer} options={{ headerShown: false }} />
           <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
           <Stack.Screen name="UpdateProfile" component={UpdateProfileScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Setting" component={SettingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="EditCategories" component={EditCategoriesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="NewCategory" component={NewCategoryScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="FollowUs" component={FollowUsScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ headerShown: false }} />
         </>
       ) : (
         <>

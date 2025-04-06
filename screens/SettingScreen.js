@@ -24,32 +24,10 @@ const SettingScreen = ({ navigation }) => {
             size={24}
             onPress={() => navigation.goBack()}
           />
-          <Text style={{ color: Colors.white, fontSize: 20 }}>Settings</Text>
+          <Text style={{ color: Colors.white, fontSize: 20 }}>Setting</Text>
         </View>
 
-        <View style={styles.profileContainer}>
-          <Pressable onPress={() => navigation.navigate("Profile")}>
-            {userData?.profileImage != null ? (
-              <Image
-                source={{ uri: IMAGE_URL + userData?.profileImage }}
-                style={styles.profileImage}
-                onError={(e) =>
-                  console.log("Error loading image:", e.nativeEvent.error)
-                }
-              />
-            ) : (
-              <Image
-                source={require("../assets/images/default.png")}
-                style={styles.profileImage}
-              />
-            )}
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate("Profile")}>
-            <Text style={styles.profileName}>
-              {userData?.name || userData?.mobile || "-"}
-            </Text>
-          </Pressable>
-        </View>
+      
       </LinearGradient>
     </>
   );
@@ -61,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     paddingTop: 26,
-    height: "25%",
+    height: "10%",
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
   },
